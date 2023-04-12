@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,15 +12,28 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class SpringAzureDemoApplication {
 
-	@GetMapping("/chamada")
-	public String list() {
+	@GetMapping("/nomeCurso/{id}")
+	public String list(@PathVariable Integer id) {
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.getForEntity("https://spring-azure-teste.azurewebsites.net/message", String.class);
+		ResponseEntity<String> response = restTemplate.getForEntity("https://spring-azure-teste.azurewebsites.net/bancoListaCursosId/{id}", String.class);
+		//ResponseEntity<String> response = restTemplate.getForEntity("https://localhost:8090/bancoListaCursosId/{id}", String.class);
 		String responseBody = response.getBody();
 		if(responseBody != null || responseBody != ""){
-			return "acerto";
+			return responseBody;
 		}
-		return "erro";
+		return "Não existe curso com esse id, tente novamente entre 0 e 4!";
+	}
+
+	@GetMapping("/listaCursos")
+	public String list() {
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.getForEntity("https://spring-azure-teste.azurewebsites.net/bancoListaCursos", String.class);
+		//ResponseEntity<String> response = restTemplate.getForEntity("https://localhost:8090/bancoListaCursos", String.class);
+		String responseBody = response.getBody();
+		if(responseBody != null || responseBody != ""){
+			return responseBody;
+		}
+		return "Não há dados de nenhum curso na lista!";
 	}
 
 	public static void main(String[] args) {
