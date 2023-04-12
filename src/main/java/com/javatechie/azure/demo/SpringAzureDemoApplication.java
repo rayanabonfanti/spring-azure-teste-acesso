@@ -12,10 +12,10 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class SpringAzureDemoApplication {
 
-	@GetMapping("/nomeCurso/{obterId}")
-	public String list(@PathVariable Integer obterId) {
+	@GetMapping("/nomeCurso/{id}")
+	public String list(@PathVariable Integer id) {
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.getForEntity("https://spring-azure-teste.azurewebsites.net/bancoListaCursosId?id=obterId", String.class);
+		ResponseEntity<String> response = restTemplate.getForEntity("https://spring-azure-teste.azurewebsites.net/bancoListaCursosId/{id}", String.class);
 		//ResponseEntity<String> response = restTemplate.getForEntity("https://localhost:8090/bancoListaCursosId/{id}", String.class);
 		String responseBody = response.getBody();
 		if(responseBody != null || responseBody != ""){
