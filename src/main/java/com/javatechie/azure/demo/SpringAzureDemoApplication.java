@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class SpringAzureDemoApplication {
 
-	@GetMapping("/nomeCurso/{id}")
+	@GetMapping("/nomeCurso/{obterId}")
 	public String list(@PathVariable Integer obterId) {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.getForEntity("https://spring-azure-teste.azurewebsites.net/bancoListaCursosId?id=obterId", String.class);
